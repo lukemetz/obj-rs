@@ -1,5 +1,9 @@
-//! Parsers for wavefront's `.obj` and `.mtl` file format for loading meshes.
+//! A parser for wavefront `.obj` and `.mtl` file format.
+
+#![crate_name = "obj"]
+#![unstable]
 #![crate_type = "lib"]
+
 #![deny(warnings)]
 #![deny(missing_docs)]
 

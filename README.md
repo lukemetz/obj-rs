@@ -1,10 +1,11 @@
 obj-rs [![Build Status][travis-i]][travis-a]
 ========
 
-This is a parser for the wavefront `.obj` file format. There are informative
-error messages with line number reporting. The full file format is not supported
-*yet*. Patches for adding support for unimplemented parts of the format are very
-welcome.
+A parser for wavefront `.obj` and `.mtl` file format.
+
+There are informative error messages with line number reporting.
+The full file format is not supported *yet*. Patches for adding support for
+unimplemented parts of the format are very welcome.
 
 ###### References
 

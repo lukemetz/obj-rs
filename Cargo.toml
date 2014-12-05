@@ -1,7 +1,22 @@
 [package]
 name = "obj-rs"
-version = "0.0.1"
+version = "0.0.2"
 authors = [
   "Clark Gaebel <cg.wowus.cg@gmail.com>",
   "Hyeon Kim <simnalamburt@gmail.com>",
 ]
+description   = "A parser for wavefront '.obj' and '.mtl' file format."
+documentation = "https://simnalamburt.github.io/obj-rs"
+homepage      = "https://github.com/simnalamburt/obj-rs"
+repository    = "https://github.com/simnalamburt/obj-rs"
+readme        = "README.md"
+keywords      = ["graphics"]
+license       = "MIT"
+
+[lib]
+name      = "obj"
+path      = "src/lib.rs"
+test      = true
+doctest   = true
+bench     = true
+doc       = true

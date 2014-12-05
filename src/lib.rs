@@ -1,8 +1,7 @@
 //! A parser for wavefront `.obj` and `.mtl` file format.
 
-#![crate_name = "obj"]
 #![unstable]
-#![crate_type = "lib"]
+#![doc(html_root_url = "https://simnalamburt.github.io/obj-rs")]
 
 #![deny(warnings)]
 #![deny(missing_docs)]

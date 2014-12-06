@@ -1,6 +1,9 @@
 use std::iter;
 use std::slice;
 
+#[cfg(test)]
+mod tests;
+
 /// A parsing error, with location information.
 #[deriving(Show, PartialEq)]
 pub struct ParseError {
@@ -152,26 +155,4 @@ impl<'a> Iterator<String> for Lexer<'a> {
     fn size_hint(&self) -> (uint, Option<uint>) {
         (0, None)
     }
-}
-
-#[test]
-fn test_next_word() {
-    let mut l = Lexer::new("hello world\n this# is\na   \t test\n");
-    assert_eq!(l.next_word(), Some(b"hello".to_vec()));
-    assert_eq!(l.current_line_number, 1);
-    assert_eq!(l.next_word(), Some(b"world".to_vec()));
-    assert_eq!(l.current_line_number, 1);
-    assert_eq!(l.next_word(), Some(b"\n".to_vec()));
-    assert_eq!(l.current_line_number, 2);
-    assert_eq!(l.next_word(), Some(b"this".to_vec()));
-    assert_eq!(l.current_line_number, 2);
-    assert_eq!(l.next_word(), Some(b"\n".to_vec()));
-    assert_eq!(l.current_line_number, 3);
-    assert_eq!(l.next_word(), Some(b"a".to_vec()));
-    assert_eq!(l.current_line_number, 3);
-    assert_eq!(l.next_word(), Some(b"test".to_vec()));
-    assert_eq!(l.current_line_number, 3);
-    assert_eq!(l.next_word(), Some(b"\n".to_vec()));
-    assert_eq!(l.current_line_number, 4);
-    assert_eq!(l.next_word(), None);
 }

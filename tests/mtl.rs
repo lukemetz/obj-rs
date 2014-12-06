@@ -1,5 +1,7 @@
-use super::{MtlSet, Material, Color, parse};
-use super::Illumination::AmbientDiffuseSpecular;
+extern crate obj;
+
+use obj::mtl::{MtlSet, Material, Color, parse};
+use obj::mtl::Illumination::AmbientDiffuseSpecular;
 
 #[test]
 fn test_cube() {

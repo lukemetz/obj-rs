@@ -7,9 +7,6 @@ use std::result::{Result,Err,Ok};
 pub use lex::ParseError;
 use lex::Lexer;
 
-#[cfg(test)]
-mod tests;
-
 /// A set of materials in one `.mtl` file.
 #[deriving(Clone, Show, PartialEq)]
 #[allow(missing_docs)]

@@ -1,26 +1,13 @@
 extern crate obj;
 
-use obj::mtl::{MtlSet, Material, Color, parse};
+use std::io::{File, BufferedReader};
+
+use obj::mtl::{parse, MtlSet, Material, Color};
 use obj::mtl::Illumination::AmbientDiffuseSpecular;
 
 #[test]
-fn test_cube() {
-    let input = r#"
-# Blender MTL File: 'cube.blend'
-# Material Count: 1
-
-newmtl Material
-Ns 96.078431
-Ka 0.000000 0.000000 0.000000
-Kd 0.640000 0.640000 0.640000
-Ks 0.500000 0.500000 0.500000
-Ni 1.000000
-d 1.000000
-illum 2
-map_Kd cube-uv-num.png
-"#;
-
-    let expected = MtlSet{
+fn test_parse() {
+    expect("cube.mtl").to_be(MtlSet {
         materials: vec!(
             Material {
                 name: "Material".into_string(),
@@ -32,50 +19,11 @@ map_Kd cube-uv-num.png
                 alpha: 1.0,
                 illumination: AmbientDiffuseSpecular,
                 uv_map: Some("cube-uv-num.png".into_string()),
-            }
+            },
         )
-    };
+    });
 
-    assert_eq!(parse(input.into_string()).unwrap(), expected);
-}
-
-#[test]
-fn test_parse() {
-    let input = r#"
-# Blender MTL File: 'None'
-# Material Count: 2
-
-# name
-newmtl Material
-# Phong specular coefficient
-Ns 96.078431
-# ambient color (weighted)
-Ka 0.000000 0.000000 0.000000
-# diffuse color (weighted)
-Kd 0.640000 0.640000 0.640000
-# dissolve factor (weighted)
-Ks 0.500000 0.500000 0.500000
-# optical density (refraction)
-Ni 1.000000
-# alpha
-d 1.000000
-# illumination: 0=ambient, 1=ambient+diffuse, 2=ambient+diffuse+specular
-illum 2
-
-newmtl None
-Ns 0
-# ambient
-Ka 0.000000 0.000000 0.000000
-# diffuse
-Kd 0.8 0.8 0.8
-# specular
-Ks 0.8 0.8 0.8
-d 1
-illum 2
-
-"#;
-
-    let expected = MtlSet {
+    expect("untitled.mtl").to_be(MtlSet {
         materials: vec!(
             Material {
                 name: "Material".into_string(),
@@ -98,9 +46,31 @@ illum 2
                 alpha: 1.0,
                 illumination: AmbientDiffuseSpecular,
                 uv_map: None,
-            }
+            },
         )
-    };
+    });
+}
 
-    assert_eq!(parse(input.into_string()).unwrap(), expected);
+
+//
+// Test helpers below
+//
+fn expect(filename: &str) -> Actual {
+    let path = Path::new("tests").join("fixtures").join(filename);
+    let file = File::open(&path).unwrap();
+    let mut reader = BufferedReader::new(file);
+    let buf = reader.read_to_end().unwrap();
+    let content = String::from_utf8(buf).unwrap();
+    let mtl_set = parse(content).unwrap();
+    Actual { actual: mtl_set }
+}
+
+struct Actual {
+    actual: MtlSet,
+}
+
+impl Actual {
+    fn to_be(&self, expectation: MtlSet) {
+        assert_eq!(self.actual, expectation);
+    }
 }

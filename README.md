@@ -1,4 +1,4 @@
-obj-rs [![Cargo version][cargo-i]][cargo-a] [![Build Status][travis-i]][travis-a]
+obj-rs [![][version-i]][crates] [![][buildstat-i]][travis]
 ========
 
 A parser for wavefront `.obj` and `.mtl` file format.
@@ -17,9 +17,10 @@ unimplemented parts of the format are very welcome.
 
 --------
 
-MIT License
+[BSD 2-Clause](LICENSE.md)
 
-[cargo-i]: https://img.shields.io/badge/cargo-0.0.2-yellow.svg
-[cargo-a]: https://crates.io/crates/obj-rs
-[travis-i]: https://travis-ci.org/simnalamburt/obj-rs.svg?branch=master
-[travis-a]: https://travis-ci.org/simnalamburt/obj-rs
+[crates]:       //crates.io/crates/obj-rs
+[travis]:       //travis-ci.org/simnalamburt/obj-rs
+
+[version-i]:    https://img.shields.io/badge/cargo-v0.0.3-red.svg?style=flat
+[buildstat-i]:  https://img.shields.io/travis/simnalamburt/obj-rs/master.svg?style=flat

@@ -1,6 +1,6 @@
 [package]
 name = "obj-rs"
-version = "0.0.2"
+version = "0.0.3"
 authors = [
   "Clark Gaebel <cg.wowus.cg@gmail.com>",
   "Hyeon Kim <simnalamburt@gmail.com>",
@@ -11,15 +11,10 @@ homepage      = "https://github.com/simnalamburt/obj-rs"
 repository    = "https://github.com/simnalamburt/obj-rs"
 readme        = "README.md"
 keywords      = ["graphics"]
-license       = "MIT"
+license       = "BSD-2-Clause"
 
 [lib]
-name      = "obj"
-path      = "src/lib.rs"
-test      = true
-doctest   = true
-bench     = true
-doc       = true
+name = "obj"
 
 [dev-dependencies]
 bear = "^0.1.1"

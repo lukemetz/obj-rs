@@ -1,13 +1,16 @@
 extern crate obj;
-
-use std::io::{File, BufferedReader};
+extern crate bear;
 
 use obj::mtl::{parse, MtlSet, Material, Color};
 use obj::mtl::Illumination::AmbientDiffuseSpecular;
 
 #[test]
 fn test_parse() {
-    expect("cube.mtl").to_be(MtlSet {
+    fn f(filename: &str) -> MtlSet {
+        obj::mtl::parse(bear::fixture(filename)).unwrap()
+    }
+
+    assert_eq!(f("cube.mtl"), MtlSet {
         materials: vec!(
             Material {
                 name: "Material".into_string(),
@@ -23,7 +26,7 @@ fn test_parse() {
         )
     });
 
-    expect("untitled.mtl").to_be(MtlSet {
+    assert_eq!(f("untitled.mtl"), MtlSet {
         materials: vec!(
             Material {
                 name: "Material".into_string(),
@@ -49,28 +52,4 @@ fn test_parse() {
             },
         )
     });
-}
-
-
-//
-// Test helpers below
-//
-fn expect(filename: &str) -> Actual {
-    let path = Path::new("tests").join("fixtures").join(filename);
-    let file = File::open(&path).unwrap();
-    let mut reader = BufferedReader::new(file);
-    let buf = reader.read_to_end().unwrap();
-    let content = String::from_utf8(buf).unwrap();
-    let mtl_set = parse(content).unwrap();
-    Actual { actual: mtl_set }
-}
-
-struct Actual {
-    actual: MtlSet,
-}
-
-impl Actual {
-    fn to_be(&self, expectation: MtlSet) {
-        assert_eq!(self.actual, expectation);
-    }
 }

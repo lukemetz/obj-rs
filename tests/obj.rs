@@ -1,13 +1,16 @@
 extern crate obj;
+extern crate bear;
 
-use std::io::{File, BufferedReader};
-
-use obj::obj::{parse, ObjSet, Object, Vertex, TVertex, Normal, Geometry};
+use obj::obj::{ObjSet, Object, Vertex, TVertex, Normal, Geometry};
 use obj::obj::Shape::{Line, Triangle};
 
 #[test]
 fn test_cube() {
-    expect("cube.obj").to_be(ObjSet {
+    fn f(filename: &str) -> ObjSet {
+        obj::obj::parse(bear::fixture(filename)).unwrap()
+    }
+
+    assert_eq!(f("cube.obj"), ObjSet {
         material_library: "cube.mtl".into_string(),
         objects: vec![
             Object {
@@ -63,7 +66,7 @@ fn test_cube() {
         ]
     });
 
-    expect("untitled.obj").to_be(ObjSet {
+    assert_eq!(f("untitled.obj"), ObjSet {
         material_library: "untitled.mtl".into_string(),
         objects: vec!(
             Object {
@@ -218,7 +221,7 @@ fn test_cube() {
         )
     });
 
-    expect("normal-cone.obj").to_be(ObjSet {
+    assert_eq!(f("normal-cone.obj"), ObjSet {
         material_library: "normal-cone.mtl".into_string(),
         objects: vec![
             Object {
@@ -338,7 +341,7 @@ fn test_cube() {
         ]
     });
 
-    expect("dome.obj").to_be(ObjSet {
+    assert_eq!(f("dome.obj"), ObjSet {
         material_library: "dome.mtl".into_string(),
         objects: vec![
             Object {
@@ -459,28 +462,4 @@ fn test_cube() {
             }
         ]
     });
-}
-
-
-//
-// Test helpers below
-//
-fn expect(filename: &str) -> Actual {
-    let path = Path::new("tests").join("fixtures").join(filename);
-    let file = File::open(&path).unwrap();
-    let mut reader = BufferedReader::new(file);
-    let buf = reader.read_to_end().unwrap();
-    let content = String::from_utf8(buf).unwrap();
-    let obj_set = parse(content).unwrap();
-    Actual { actual: obj_set }
-}
-
-struct Actual {
-    actual: ObjSet,
-}
-
-impl Actual {
-    fn to_be(&self, expectation: ObjSet) {
-        assert_eq!(self.actual, expectation);
-    }
 }

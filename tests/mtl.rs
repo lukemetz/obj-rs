@@ -7,7 +7,7 @@ use obj::mtl::Illumination::AmbientDiffuseSpecular;
 #[test]
 fn test_parse() {
     fn f(filename: &str) -> MtlSet {
-        obj::mtl::parse(bear::fixture(filename)).unwrap()
+        obj::mtl::parse(bear::fixture(filename).as_slice()).unwrap()
     }
 
     assert_eq!(f("cube.mtl"), MtlSet {

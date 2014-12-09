@@ -370,7 +370,16 @@ impl<'a> Parser<'a> {
 /// best-effort and realistically I will only end up supporting the subset
 /// of the file format which falls under the "shit I see exported from blender"
 /// category.
-pub fn parse(mut input: String) -> Result<MtlSet, ParseError> {
-    input.push_str("\n");
-    Parser::new(input.as_slice()).parse_mtlset()
+pub fn parse(input: &str) -> Result<MtlSet, ParseError> {
+    // Unfortunately, the parser requires a trailing newline. This is the easiest
+    // way I could find to allow non-trailing newlines.
+    fn mtl(sanitized: &str) -> Result<MtlSet, ParseError> {
+        Parser::new(sanitized).parse_mtlset()
+    }
+
+    match input.chars().next_back() {
+        Some('\n') => mtl(input),
+        Some(_) => mtl((input.to_string() + "\n".to_string()).as_slice()),
+        None => mtl("\n"),
+    }
 }

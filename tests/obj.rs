@@ -7,7 +7,7 @@ use obj::obj::Shape::{Line, Triangle};
 #[test]
 fn test_cube() {
     fn f(filename: &str) -> ObjSet {
-        obj::obj::parse(bear::fixture(filename)).unwrap()
+        obj::obj::parse(bear::fixture(filename).as_slice()).unwrap()
     }
 
     assert_eq!(f("cube.obj"), ObjSet {
